@@ -2,11 +2,11 @@
 
 if [ ! -d "/var/lib/mysql/wordpress" ]; then
     service mysql start
-    mysql -u root -e "CREATE DATABASE wordpress_db;"
-    mysql -u root -e "CREATE USER 'tsekiguc'@'%' IDENTIFIED BY 'user_password';"
-    mysql -u root -e "GRANT ALL ON wordpress_db.* TO 'tsekiguc'@'%';"
+    mysql -u root -e "CREATE DATABASE $DB_NAME;"
+    mysql -u root -e "CREATE USER '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD';"
+    mysql -u root -e "GRANT ALL ON $DB_NAME.* TO '$DB_USER'@'%';"
     mysql -u root -e "FLUSH PRIVILEGES;"
-    mysqladmin -u root password "root_password"
+    mysqladmin -u root password "$DB_ROOT_PASSWORD"
     service mysql stop
 fi
 
