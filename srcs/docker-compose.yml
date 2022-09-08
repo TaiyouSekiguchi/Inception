@@ -1,15 +1,15 @@
 version: '3'
 
-volumes:
-    data: {}
 services:
     mariadb:
         container_name: mariadb
+        build: requirements/mariadb
         restart: always
         expose:
             - "3306"
     nginx:
         container_name: nginx
+        build: requirements/nginx
         restart: always
         ports:
             - "443:443"
@@ -17,8 +17,27 @@ services:
             - data:/var/www/html
     wordpress:
         container_name: wordpress
+        build: requirements/wordpress
         restart: always
         volumes:
             - data:/var/www/html
         expose:
             - "9000"
+
+volumes:
+    db:
+        driver: local
+        driver_ops:
+            type: none
+            o: bind
+            device: ~/tsekiguc/data/db
+    wp:
+        driver: local
+        driver_ops:
+            type: none
+            o: bind
+            device: ~/tsekiguc/data/wp
+
+networks:
+    app-networks:
+        driver: bridge
