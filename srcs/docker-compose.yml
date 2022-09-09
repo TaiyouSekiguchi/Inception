@@ -57,13 +57,13 @@ volumes:
          driver_opts:
             type: none
             o: bind
-            device: ~/login/data/db
+            device: ~/tsekiguc/data/db
     wp:
          driver: local
          driver_opts:
             type: none
             o: bind
-            device: ~/login/data/wp
+            device: ~/tsekiguc/data/wp
 networks:
     app-network:
         driver: bridge
