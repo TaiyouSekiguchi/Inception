@@ -4,7 +4,7 @@ chown -R mysql:mysql /var/lib/mysql
 if ! [ -d "/var/lib/mysql/wordpress" ]; then
     service mysql start
     for i in {30..1}; do
-        if echo 'SELECT 1;' | mysql -u root -e; then
+        if mysql -u root -e "SELECT 1;"; then
             break
         fi
         echo 'MySQL init process in progress...'
