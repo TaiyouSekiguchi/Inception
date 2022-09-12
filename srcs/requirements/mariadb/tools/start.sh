@@ -4,14 +4,14 @@ chown -R mysql:mysql /var/lib/mysql
 if ! [ -d "/var/lib/mysql/wordpress" ]; then
     service mysql start
     for i in {30..1}; do
-        if mysql -u root -e "SELECT 1;"; then
+        if echo 'SELECT 1' | mysql -u root; then
             break
         fi
         echo 'MySQL init process in progress...'
         sleep 1
     done
     if [ "$i" = 0 ]; then
-        echo &2 'MySQL init process failed.'
+        echo >&2 'MySQL init process failed.'
         exit 1
     fi
     mysql -u root -e "CREATE DATABASE IF NOT EXISTS $DB_NAME DEFAULT CHARACTER SET utf8;"
