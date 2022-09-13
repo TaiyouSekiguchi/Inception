@@ -4,6 +4,10 @@ wp core is-installed --allow-root 2> /dev/null
 if [ $? -ne 0 ]; then
     wp core download --allow-root
 
+    until mysql -h mariadb -P 3306 -u ${DB_USER} -p${DB_PASSWORD} 2> /dev/null; do
+        sleep 1
+    done
+
     wp config create \
         --dbhost=${DB_HOST} \
         --dbname=${DB_NAME} \
