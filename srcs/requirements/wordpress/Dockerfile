@@ -11,19 +11,12 @@ RUN apt-get update -y && \
     php-xml \
     php-mysqli \
     mariadb-client \
-    wget \
     curl
 
-RUN wget https://wordpress.org/latest.tar.gz && \
-    tar -xzvf latest.tar.gz && \
-    mkdir -p /var/www/html && \
-    mv wordpress/* /var/www/html && \
-    rm -r wordpress latest.tar.gz && \
-    curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
     chmod +x wp-cli.phar && \
     mv wp-cli.phar /usr/local/bin/wp && \
-    rm -f /var/www/html/wp-config-sample.php && \
-    mkdir /run/php/
+    mkdir -p /run/php/;
 
 COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d
 
@@ -31,7 +24,7 @@ ENV TINI_VERSION v0.19.0
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
 RUN chmod +x /tini
 
-WORKDIR /var/www/html
+WORKDIR /var/www/wordpress
 COPY tools/start.sh .
 RUN chmod 777 ./start.sh
 
