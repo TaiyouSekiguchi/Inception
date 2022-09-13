@@ -9,7 +9,8 @@ COPY tools .
 RUN chmod +x ./setup.sh && \
     ./setup.sh && \
     rm ./setup.sh && \
-    chmod +x ./start.sh
+    chmod +x ./start.sh && \
+    mkdir /run/mysql
 
 ENV TINI_VERSION v0.19.0
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
