@@ -3,7 +3,16 @@
 chown -R mysql:mysql /var/lib/mysql
 if ! [ -d "/var/lib/mysql/wordpress" ]; then
     service mysql start
-    mysql -u root -e "CREATE DATABASE IF NOT EXISTS $DB_NAME DEFAULT CHARACTER SET utf8;"
+    for i in {30..1}; do
+        if echo 'SELECT 1' | mysql -u root &> /dev/null; then
+            break
+        fi
+        sleep 1
+    done
+    if [ "$i" = 0 ]; then
+        exit 1
+    fi
+    mysql -u root -e "CREATE DATABASE $DB_NAME;"
     mysql -u root -e "CREATE USER '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD';"
     mysql -u root -e "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'%';"
     mysql -u root -e "FLUSH PRIVILEGES;"

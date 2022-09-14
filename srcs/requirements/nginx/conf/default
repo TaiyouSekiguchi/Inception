@@ -9,7 +9,7 @@ server {
     ssl_protocols TLSv1.2 TLSv1.3;
 
     index index.php;
-    root /var/www/html;
+    root /var/www/wordpress;
 
     location / {
         try_files $uri $uri/ /index.php$is_args$args;

@@ -2,4 +2,4 @@ a.out
 *.o
 *.a
 tags
-*tags
+.tags
